@@ -1,4 +1,5 @@
-var socket = io.connect("http://192.168.0.13:8080")
+const adress = "192.168.0.41"
+var socket = io.connect("http://"+adress+":8080")
 socket.emit("hello", "Connected from web page")
 var connectedClients = []
 
@@ -30,7 +31,6 @@ function appendMessage(message) {
     var messages = document.getElementById("messages")
     var remain = messages.innerHTML
     messages.innerHTML = ('<div class="message">' + message + "</div>").concat(remain)
-    //+ remain
 }
 
 socket.on("start-timer", (duration) => {
@@ -38,7 +38,7 @@ socket.on("start-timer", (duration) => {
     var remaining = duration
     var timer = setInterval(()=>{
         console.log(remaining)
-        document.getElementById("timer").innerHTML = remaining-- + " s"
+        document.getElementById("timer").innerHTML = --remaining + " s"
         if(remaining == 0){
             clearInterval(timer)
         }
